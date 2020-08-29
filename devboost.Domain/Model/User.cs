@@ -17,6 +17,8 @@ namespace devboost.Domain.Model
         public string Paswword { get; private set; }
         public string Role { get; private set; }
 
+        public Cliente Cliente { get; set; }
+
         public bool SenhaEValida(string password)
         {
             return password == Paswword;

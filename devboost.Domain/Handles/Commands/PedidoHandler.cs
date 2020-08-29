@@ -24,9 +24,9 @@ namespace devboost.Domain.Handles.Commands
             _clienteRepository = clienteRepository;
         }
 
-        public async Task<Pedido> RealizarPedido(RealizarPedidoRequest pedidoRequest)
+        public async Task<Pedido> RealizarPedido(RealizarPedidoRequest pedidoRequest, string userName)
         {
-            var cliente = await _clienteRepository.Get(pedidoRequest.Cliente.Nome);
+            var cliente = await _clienteRepository.GetByUserName(userName);
             if (cliente == null)
                 throw new Exception("Cliente não localizado");
             var distancia = GEOCalculaDistancia.CalculaDistanciaEmKM(new GEOParams(LATITUDE, LONGITUDE, cliente.Latitude, cliente.Longitude));

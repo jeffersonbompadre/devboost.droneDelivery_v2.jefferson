@@ -22,6 +22,9 @@ namespace devboost.Domain.Model
         public double Latitude { get; set; }
         public double Longitude { get; set; }
 
+        public Guid UserId { get; set; }
+        public User User { get; set; }
+
         public List<Pedido> Pedidos { get; set; } = new List<Pedido>();
 
         public bool IsValid()

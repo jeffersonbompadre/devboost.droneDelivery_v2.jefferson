@@ -8,6 +8,7 @@ using devboost.Repository;
 using devboost.Repository.Context;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -29,6 +30,9 @@ namespace devboost.dronedelivery
         {
             services.AddCors();
             services.AddControllers();
+
+            //Registra ContextAcessor para conseguir informação do usuário Authenticado
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             //Registra Authentication por JWT
             services.AddJwtconfiguration(Configuration);

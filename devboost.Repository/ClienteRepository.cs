@@ -28,12 +28,19 @@ namespace devboost.Repository
 
         public async Task<List<Cliente>> GetAll()
         {
-            return await _dataContext.Cliente.ToListAsync();
+            return await _dataContext.Cliente
+                .Include(x => x.User)
+                .ToListAsync();
         }
 
         public async Task<Cliente> Get(string nome)
         {
             return await _dataContext.Cliente.FirstOrDefaultAsync(x => x.Nome == nome);
+        }
+
+        public async Task<Cliente> GetByUserName(string userName)
+        {
+            return await _dataContext.Cliente.FirstOrDefaultAsync(x => x.User.UserName == userName);
         }
     }
 }

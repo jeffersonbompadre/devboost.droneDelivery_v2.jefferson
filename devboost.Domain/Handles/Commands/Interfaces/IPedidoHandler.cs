@@ -6,7 +6,7 @@ namespace devboost.Domain.Handles.Commands.Interfaces
 {
     public interface IPedidoHandler
     {
-        Task<Pedido> RealizarPedido(RealizarPedidoRequest pedidoRequest);
+        Task<Pedido> RealizarPedido(RealizarPedidoRequest pedidoRequest, string userName);
         Task DistribuirPedido();
     }
 }

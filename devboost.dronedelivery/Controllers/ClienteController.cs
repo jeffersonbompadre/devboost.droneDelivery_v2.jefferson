@@ -19,11 +19,13 @@ namespace devboost.dronedelivery.Controllers
     {
         readonly IClienteHandler _clienteHandler;
         readonly IClientQueryHandler _clientQueryHandler;
+        readonly IHttpContextAccessor _accessor;
 
-        public ClienteController(IClienteHandler clienteHandler, IClientQueryHandler clientQueryHandler)
+        public ClienteController(IClienteHandler clienteHandler, IClientQueryHandler clientQueryHandler, IHttpContextAccessor accessor)
         {
             _clienteHandler = clienteHandler;
             _clientQueryHandler = clientQueryHandler;
+            _accessor = accessor;
         }
 
         [HttpGet]
@@ -38,7 +40,8 @@ namespace devboost.dronedelivery.Controllers
         {
             try
             {
-                await _clienteHandler.AddCliente(clienteRequest);
+                var userName = _accessor.HttpContext.User.Identity.Name;
+                await _clienteHandler.AddCliente(clienteRequest, userName);
                 return Ok("Cliente cadastrado com sucesso");
             }
             catch (Exception ex)

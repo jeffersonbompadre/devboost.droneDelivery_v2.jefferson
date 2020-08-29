@@ -10,15 +10,23 @@ namespace devboost.Domain.Handles.Commands
     public class ClienteHandler : IClienteHandler
     {
         readonly IClienteRepository _clienteRepository;
+        readonly IUserRepository _userRepository;
 
-        public ClienteHandler(IClienteRepository clienteRepository)
+        public ClienteHandler(IClienteRepository clienteRepository, IUserRepository userRepository)
         {
             _clienteRepository = clienteRepository;
+            _userRepository = userRepository;
         }
 
-        public async Task AddCliente(ClienteRequest cliente)
+        public async Task AddCliente(ClienteRequest cliente, string userName)
         {
-            var cli = new Cliente(cliente.Nome, cliente.EMail, cliente.Telefone, cliente.Latitude, cliente.Longitude);
+            var user = await _userRepository.GetUser(userName);
+            if (user == null)
+                throw new Exception("Não foi possível encontrar o usuário autenticado.");
+            var cli = new Cliente(cliente.Nome, cliente.EMail, cliente.Telefone, cliente.Latitude, cliente.Longitude)
+            {
+                User = user
+            };
             if (!cli.IsValid())
                 throw new Exception("Dados do cliente inválido, os campos: Nome, EMail, Telefone, Latitude e Longitude são obrigatórios.");
             await _clienteRepository.AddCliente(cli);

@@ -128,6 +128,14 @@ namespace devboost.Repository.Context
             builder.Entity<Cliente>()
                 .Property(x => x.Longitude)
                 .HasColumnName("Longitude");
+
+            builder.Entity<Cliente>()
+                .Property(x => x.UserId)
+                .HasColumnName("Usuario_Id");
+
+            builder.Entity<Cliente>()
+                .HasOne(x => x.User)
+                .WithOne(x => x.Cliente);
         }
     }
 }

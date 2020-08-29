@@ -1,6 +1,7 @@
 ﻿using devboost.Domain.Commands.Request;
 using devboost.Domain.Handles.Commands.Interfaces;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -13,10 +14,12 @@ namespace devboost.dronedelivery.Controllers
     public class PedidoController : ControllerBase
     {
         readonly IPedidoHandler _pedidoService;
+        readonly IHttpContextAccessor _accessor;
 
-        public PedidoController(IPedidoHandler pedidoService)
+        public PedidoController(IPedidoHandler pedidoService, IHttpContextAccessor accessor)
         {
             _pedidoService = pedidoService;
+            _accessor = accessor;
         }
 
         [HttpPost("realizarpedido")]
@@ -24,7 +27,8 @@ namespace devboost.dronedelivery.Controllers
         {
             try
             {
-                var result = await _pedidoService.RealizarPedido(pedido);
+                var userName = _accessor.HttpContext.User.Identity.Name;
+                var result = await _pedidoService.RealizarPedido(pedido, userName);
                 return Ok(result);
             }
             catch (Exception ex)

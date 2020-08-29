@@ -5,6 +5,6 @@ namespace devboost.Domain.Handles.Commands.Interfaces
 {
     public interface IClienteHandler
     {
-        Task AddCliente(ClienteRequest cliente);
+        Task AddCliente(ClienteRequest cliente, string userName);
     }
 }

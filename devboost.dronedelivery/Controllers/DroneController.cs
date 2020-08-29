@@ -7,7 +7,7 @@ namespace devboost.dronedelivery.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    [AllowAnonymous]
     public class DroneController : ControllerBase
     {
         readonly IDroneHandler _droneService;

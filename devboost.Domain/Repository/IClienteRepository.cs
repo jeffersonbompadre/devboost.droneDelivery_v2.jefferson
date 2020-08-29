@@ -9,5 +9,6 @@ namespace devboost.Domain.Repository
         Task AddCliente(Cliente cliente);
         Task<List<Cliente>> GetAll();
         Task<Cliente> Get(string nome);
+        Task<Cliente> GetByUserName(string userName);
     }
 }
